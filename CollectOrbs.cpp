@@ -162,10 +162,10 @@ int ValueCheck(Color color, int increase)
 /// <param name="posyT">Position Y of the text</param>
 /// <param name="fontS">Size of the font</param>
 /// <param name="TColor">Color of the text</param>
-void DrawButton(int posx, int posy, int width, int height, Color Background, Color Outline, int OutlineThickness, string ButtonText, int posxT, int posyT, int fontS, Color TColor)
-{ // Misc. function because i've been drawing a lot of buttons
-    DrawRectangle(posx, posy, width, height, Background); // background
-    DrawRectangleLinesEx({ float(posx), float(posy), float(width), float(height) }, OutlineThickness, Outline); // outline
+void DrawButton(Rectangle background, Color backgroundC, Color Outline, int OutlineThickness, string ButtonText, int posxT, int posyT, int fontS, Color TColor)
+{
+    DrawRectangle(background.x, background.y, background.width, background.height, backgroundC); // background
+    DrawRectangleLinesEx({ float(background.x), float(background.y), float(background.width), float(background.height) }, OutlineThickness, Outline); // outline
     DrawText(ButtonText.c_str(), posxT, posyT, fontS, TColor); // text
 }
 
@@ -321,23 +321,23 @@ void settings(Texture2D texture)
     DrawText("Master Vol. : ", 285, 85, 21, WHITE); // music volume
     DrawText(TextFormat("%.0f", mastervolume * 100), 430, 86, 21, WHITE);
     Rectangle PlusVolumeMas = Rectangle{ 465, 86, 21, 21 };
-    DrawButton(PlusVolumeMas.x, PlusVolumeMas.y, PlusVolumeMas.width, PlusVolumeMas.height, GRAY, LIGHTGRAY, 2, "+", 469, 85, 26, WHITE);
+    DrawButton({ PlusVolumeMas.x, PlusVolumeMas.y, PlusVolumeMas.width, PlusVolumeMas.height }, GRAY, LIGHTGRAY, 2, "+", 469, 85, 26, WHITE);
     Rectangle MinVolumeMas = Rectangle{ 490, 86, 21, 21 };
-    DrawButton(MinVolumeMas.x, MinVolumeMas.y, MinVolumeMas.width, MinVolumeMas.height, GRAY, LIGHTGRAY, 2, "-", 495, 85, 26, WHITE);
+    DrawButton({ MinVolumeMas.x, MinVolumeMas.y, MinVolumeMas.width, MinVolumeMas.height }, GRAY, LIGHTGRAY, 2, "-", 495, 85, 26, WHITE);
 
     DrawText("Music Volume: ", 285, 115, 21, WHITE); // music volume
     DrawText(TextFormat("%.0f", sounds.musicvolume * 100), 430, 116, 21, WHITE);
     Rectangle PlusVolumeMus = Rectangle{ 465, 116, 21, 21 };
-    DrawButton(PlusVolumeMus.x, PlusVolumeMus.y, PlusVolumeMus.width, PlusVolumeMus.height, GRAY, LIGHTGRAY, 2, "+", 469, 115, 26, WHITE);
+    DrawButton({ PlusVolumeMus.x, PlusVolumeMus.y, PlusVolumeMus.width, PlusVolumeMus.height }, GRAY, LIGHTGRAY, 2, "+", 469, 115, 26, WHITE);
     Rectangle MinVolumeMus = Rectangle{ 490, 116, 21, 21 };
-    DrawButton(MinVolumeMus.x, MinVolumeMus.y, MinVolumeMus.width, MinVolumeMus.height, GRAY, LIGHTGRAY, 2, "-", 495, 115, 26, WHITE);
+    DrawButton({ MinVolumeMus.x, MinVolumeMus.y, MinVolumeMus.width, MinVolumeMus.height }, GRAY, LIGHTGRAY, 2, "-", 495, 115, 26, WHITE);
 
     DrawText("SFX Volume: ", 285, 145, 21, WHITE); // music volume
     DrawText(TextFormat("%.0f", sfxvolume * 100), 430, 146, 21, WHITE);
     Rectangle PlusVolumeSFX = Rectangle{ 465, 146, 21, 21 };
-    DrawButton(PlusVolumeSFX.x, PlusVolumeSFX.y, PlusVolumeSFX.width, PlusVolumeSFX.height, GRAY, LIGHTGRAY, 2, "+", 469, 145, 26, WHITE);
+    DrawButton({ PlusVolumeSFX.x, PlusVolumeSFX.y, PlusVolumeSFX.width, PlusVolumeSFX.height }, GRAY, LIGHTGRAY, 2, "+", 469, 145, 26, WHITE);
     Rectangle MinVolumeSFX = Rectangle{ 490, 146, 21, 21 };
-    DrawButton(MinVolumeSFX.x, MinVolumeSFX.y, MinVolumeSFX.width, MinVolumeSFX.height, GRAY, LIGHTGRAY, 2, "-", 495, 145, 26, WHITE);
+    DrawButton({ MinVolumeSFX.x, MinVolumeSFX.y, MinVolumeSFX.width, MinVolumeSFX.height }, GRAY, LIGHTGRAY, 2, "-", 495, 145, 26, WHITE);
 
     // logic
     if (IsRectClick(PlusVolumeMas, MOUSE_BUTTON_LEFT) && mastervolume < 1) mastervolume += 0.1;
@@ -390,11 +390,11 @@ void menu(Sound buttonhover)
     DrawText("version 1.2", 320, 100, 25, WHITE); // version
     DrawText("by Darius", 680, 470, 23, WHITE);
 
-    DrawButton(280, 180, 200, 50, GRAY, LIGHTGRAY, 5, "PLAY", 332, 187, 40, WHITE); // play button
+    DrawButton({ 280, 180, 200, 50 }, GRAY, LIGHTGRAY, 5, "PLAY", 332, 187, 40, WHITE); // play button
     static bool playhovering = 0;
-    DrawButton(10, 455, 35, 35, GRAY, LIGHTGRAY, 5, "S", 18, 459, 30, WHITE); // settings button
+    DrawButton({ 10, 455, 35, 35 }, GRAY, LIGHTGRAY, 5, "S", 18, 459, 30, WHITE); // settings button
     static bool settingshovering = 0;
-    DrawButton(65, 455, 35, 35, GRAY, LIGHTGRAY, 5, "C", 73, 459, 30, WHITE); // play button
+    DrawButton({ 65, 455, 35, 35 }, GRAY, LIGHTGRAY, 5, "C", 73, 459, 30, WHITE); // play button
     static bool creditshovering = 0;
 
     // logic
@@ -542,7 +542,7 @@ int main()
             }
 
             // Shop icon
-            DrawButton(75, 8, 100, 35, GRAY, LIGHTGRAY, 5, "SHOP", 85, 12, 30, WHITE);
+            DrawButton({ 75, 8, 100, 35 }, GRAY, LIGHTGRAY, 5, "SHOP", 85, 12, 30, WHITE);
 
             MouseHoverOver({ 75, 8, 100, 35 }, button.shophover, sounds.buttonhover, sounds.buttonhover);
 
@@ -558,7 +558,7 @@ int main()
             }
 
             // Settings icon
-            DrawButton(20, 8, 35, 35, GRAY, LIGHTGRAY, 5, "S", 28, 12, 30, WHITE);
+            DrawButton({ 20, 8, 35, 35 }, GRAY, LIGHTGRAY, 5, "S", 28, 12, 30, WHITE);
 
             MouseHoverOver({ 20, 8, 35, 35 }, button.settingshover, sounds.buttonhover, sounds.buttonhover);
 
