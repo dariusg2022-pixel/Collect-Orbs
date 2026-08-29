@@ -165,7 +165,7 @@ int ValueCheck(Color color, int increase)
 void DrawButton(Rectangle background, Color backgroundC, Color Outline, int OutlineThickness, string ButtonText, int posxT, int posyT, int fontS, Color TColor)
 {
     DrawRectangle(background.x, background.y, background.width, background.height, backgroundC); // background
-    DrawRectangleLinesEx({ float(background.x), float(background.y), float(background.width), float(background.height) }, OutlineThickness, Outline); // outline
+    DrawRectangleLinesEx(background, OutlineThickness, Outline); // outline
     DrawText(ButtonText.c_str(), posxT, posyT, fontS, TColor); // text
 }
 
