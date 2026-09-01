@@ -1,2 +1,2 @@
 # Collect-Orbs
-Simple game about collecting orbs.
+A simple game about collecting orbs made in C++ using Raylib 5.5
